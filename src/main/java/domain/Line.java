@@ -5,38 +5,49 @@ import java.util.List;
 import java.util.Random;
 
 public class Line {
-    private final List<Boolean> points;
+    private final List<Bridge> bridges;
 
-    public Line(int width, Line previousLine) {
-        this.points = createPoints(width, previousLine);
+    public Line(LadderWidth ladderWidth, Line previousLine) {
+        this.bridges = createBridges(ladderWidth, previousLine);
     }
 
-    private List<Boolean> createPoints(int width, Line previousLine) {
-        List<Boolean> points = new ArrayList<>();
+    private List<Bridge> createBridges(LadderWidth ladderWidth, Line previousLine) {
+        List<Bridge> list = new ArrayList<>();
         Random random = new Random();
-        boolean previous = false;
-        List<Boolean> previousPoints = previousLine != null ? previousLine.getPoints() : null;
-
-        for (int i = 0; i < width - 1; i++) {
-            boolean current = !previous && random.nextBoolean();
-            if (previousPoints != null && previousPoints.get(i)) {
-                current = false;
-            }
-            points.add(current);
-            previous = current;
+        boolean previousConnected = false;
+        List<Bridge> previousBridges = null;
+        if (previousLine != null) {
+            previousBridges = previousLine.getBridges();
         }
-        return points;
+        for (int i = 0; i < ladderWidth.getValue() - 1; i++) {
+            boolean connected = determineConnection(previousConnected, random, previousBridges, i);
+            list.add(Bridge.fromBoolean(connected));
+            previousConnected = connected;
+        }
+        return list;
     }
 
-    public List<Boolean> getPoints() {
-        return points;
+    private boolean determineConnection(boolean previousConnected, Random random, List<Bridge> previousBridges, int index) {
+        if (previousConnected) {
+            return false;
+        }
+        if (previousBridges != null && previousBridges.get(index) == Bridge.CONNECTED) {
+            return false;
+        }
+        return random.nextBoolean();
+    }
+
+    public List<Bridge> getBridges() {
+        return bridges;
     }
 
     public void print() {
-        StringBuilder builder = new StringBuilder("|");
-        for (boolean point : points) {
-            builder.append(point ? "-----|" : "     |");
+        StringBuilder builder = new StringBuilder();
+        builder.append("|");
+        for (Bridge bridge : bridges) {
+            builder.append(bridge.display());
+            builder.append("|");
         }
-        System.out.println(builder);
+        System.out.println(builder.toString());
     }
 }

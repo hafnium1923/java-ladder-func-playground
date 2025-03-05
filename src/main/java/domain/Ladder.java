@@ -4,27 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ladder {
-    private final List<Line> lines;
+    private final Lines lines;
 
-    public Ladder(int height, int width) {
-        this.lines = createLadder(height, width);
+    public Ladder(LadderHeight height, LadderWidth width) {
+        this.lines = new Lines(createLines(height, width));
     }
 
-    private List<Line> createLadder(int height, int width) {
-        List<Line> ladder = new ArrayList<>();
+    private List<Line> createLines(LadderHeight height, LadderWidth width) {
+        List<Line> list = new ArrayList<>();
         Line previousLine = null;
-
-        for (int i = 0; i < height; i++) {
-            Line currentLine = new Line(width, previousLine);
-            ladder.add(currentLine);
-            previousLine = currentLine;
+        for (int i = 0; i < height.getValue(); i++) {
+            Line current = new Line(width, previousLine);
+            list.add(current);
+            previousLine = current;
         }
-        return ladder;
+        return list;
     }
 
     public void print() {
-        for (Line line : lines) {
-            line.print();
-        }
+        lines.print();
     }
 }
