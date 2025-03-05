@@ -12,8 +12,12 @@ public class Ladder {
 
     private List<Line> createLadder(int height, int width) {
         List<Line> ladder = new ArrayList<>();
+        Line previousLine = null;
+
         for (int i = 0; i < height; i++) {
-            ladder.add(new Line(width));
+            Line currentLine = new Line(width, previousLine);
+            ladder.add(currentLine);
+            previousLine = currentLine;
         }
         return ladder;
     }
