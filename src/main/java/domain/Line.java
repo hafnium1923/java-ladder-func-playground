@@ -42,14 +42,14 @@ public class Line {
         return bridges;
     }
 
-    public void print() {
+    public String draw() {
         StringBuilder builder = new StringBuilder();
         builder.append("|");
         for (Bridge bridge : bridges) {
             builder.append(bridge.display());
             builder.append("|");
         }
-        System.out.println(builder.toString());
+        return builder.toString();
     }
 
     public Position move(Position position) {

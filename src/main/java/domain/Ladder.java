@@ -21,16 +21,16 @@ public class Ladder {
         return list;
     }
 
-    public void print() {
-        lines.print();
+    public List<String> getLadderBody() {
+        return lines.drawAll();
     }
 
     public LadderResult play() {
         int columnCount = lines.getColumnCount();
-        List<Position> results = new ArrayList<>();
+        List<Position> positions = new ArrayList<>();
         for (int i = 0; i < columnCount; i++) {
-            results.add(lines.moveAll(new Position(i)));
+            positions.add(lines.moveAll(new Position(i)));
         }
-        return new LadderResult(results);
+        return new LadderResult(positions);
     }
 }

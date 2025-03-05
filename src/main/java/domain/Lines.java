@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Lines {
@@ -9,10 +10,16 @@ public class Lines {
         this.lines = lines;
     }
 
-    public void print() {
+    public List<Line> getLines() {
+        return lines;
+    }
+
+    public List<String> drawAll() {
+        List<String> drawn = new ArrayList<>();
         for (Line line : lines) {
-            line.print();
+            drawn.add(line.draw());
         }
+        return drawn;
     }
 
     public Position moveAll(Position position) {
