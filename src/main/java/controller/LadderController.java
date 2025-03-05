@@ -3,6 +3,7 @@ package controller;
 import domain.Ladder;
 import domain.LadderHeight;
 import domain.LadderWidth;
+import domain.LadderResult;
 import view.InputView;
 import view.OutputView;
 
@@ -14,5 +15,7 @@ public class LadderController {
         LadderHeight height = inputView.askHeight();
         Ladder ladder = new Ladder(height, width);
         outputView.printLadder(ladder);
+        LadderResult result = ladder.play();
+        outputView.printResult(result);
     }
 }

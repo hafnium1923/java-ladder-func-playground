@@ -27,7 +27,8 @@ public class Line {
         return list;
     }
 
-    private boolean determineConnection(boolean previousConnected, Random random, List<Bridge> previousBridges, int index) {
+    private boolean determineConnection(boolean previousConnected, Random random,
+                                        List<Bridge> previousBridges, int index) {
         if (previousConnected) {
             return false;
         }
@@ -49,5 +50,25 @@ public class Line {
             builder.append("|");
         }
         System.out.println(builder.toString());
+    }
+
+    public Position move(Position position) {
+        int current = position.getValue();
+        if (canMoveLeft(current)) {
+            return new Position(current - 1);
+        }
+        if (canMoveRight(current)) {
+            return new Position(current + 1);
+        }
+        return position;
+    }
+
+    private boolean canMoveLeft(int current) {
+        return current > 0 && bridges.get(current - 1) == Bridge.CONNECTED;
+    }
+
+    private boolean canMoveRight(int current) {
+        int columnCount = bridges.size() + 1;
+        return current < columnCount - 1 && bridges.get(current) == Bridge.CONNECTED;
     }
 }

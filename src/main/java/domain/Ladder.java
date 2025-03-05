@@ -24,4 +24,13 @@ public class Ladder {
     public void print() {
         lines.print();
     }
+
+    public LadderResult play() {
+        int columnCount = lines.getColumnCount();
+        List<Position> results = new ArrayList<>();
+        for (int i = 0; i < columnCount; i++) {
+            results.add(lines.moveAll(new Position(i)));
+        }
+        return new LadderResult(results);
+    }
 }

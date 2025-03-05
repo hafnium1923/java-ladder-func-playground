@@ -14,4 +14,19 @@ public class Lines {
             line.print();
         }
     }
+
+    public Position moveAll(Position position) {
+        Position result = position;
+        for (Line line : lines) {
+            result = line.move(result);
+        }
+        return result;
+    }
+
+    public int getColumnCount() {
+        if (lines.isEmpty()) {
+            return 0;
+        }
+        return lines.get(0).getBridges().size() + 1;
+    }
 }
